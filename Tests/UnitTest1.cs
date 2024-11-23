@@ -1,38 +1,67 @@
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using SimulatedAnnealing;
 
 namespace Tests;
 
 public class Tests
 {
-    
     [SetUp]
     public void Setup()
     {
     }
 
     [Test]
-    public void Test1()
+    public void TestPenalty1()
     {
+        int[][] board =
+        [
+            [1, 0, 1, 1, 0, 0, 0, 1],
+            [1, 1, 1, 1, 0, 0, 0, 0],
+            [1, 0, 0, 1, 1, 1, 0, 0],
+            [1, 0, 1, 0, 0, 0, 1, 0],
+            [1, 0, 0, 1, 1, 1, 0, 0],
+            [0, 1, 1, 0, 0, 1, 1, 0],
+            [1, 0, 1, 0, 0, 1, 1, 0],
+            [0, 1, 0, 0, 1, 1, 0, 0]
+        ];
 
-        int[][] board = 
-           [[1,0,1,1,0,0,0,1],
-            [1,1,1,1,0,0,0,0],
-            [1,0,0,1,1,1,0,0],
-            [1,0,1,0,0,0,1,0],
-            [1,0,0,1,1,1,0,0],
-            [0,1,1,0,0,1,1,0],
-            [1,0,1,0,0,1,1,0],
-            [0,1,0,0,1,1,0,0]];
-        
-        var penalty = SimulatedAnnealing.Annealer.CalculatePenalty(board);
-        Assert.That(penalty.TooFewParksPenalty, Is.EqualTo(0));
+        var penalty = Annealer.CalculatePenalty(board);
+        Assert.That(penalty.Total, Is.EqualTo(11 * Annealer.TooManyNeighborsPenalty + 34 * Annealer.ExtraParkPenalty));
     }
-    
+
     [Test]
-    public void Test2()
+    public void TestPenaltyTrivialBoard()
     {
-        var penalty = Annealer.CalculatePenalty(Annealer.GetIdealBoard());
-        Assert.That(penalty.TooFewParksPenalty, Is.EqualTo(0));
+        int[][] idealBoard =
+        [
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1, 0, 1, 0],
+            [0, 1, 0, 1, 0, 1, 0, 1],
+        ];
+        var penalty = Annealer.CalculatePenalty(idealBoard);
+        Assert.That(penalty.Total, Is.EqualTo(32));
+    }
+
+    [Test]
+    public void TestOptimalPenalty()
+    {
+        int[][] board =
+        [
+            [1, 0, 1, 1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 0, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 0, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 0, 1, 0, 1],
+            [1, 0, 1, 1, 1, 1, 0, 1],
+            [1, 0, 1, 0, 0, 1, 0, 1]
+        ];
+
+        var penalty = Annealer.CalculatePenalty(board);
+        Assert.That(penalty.Total, Is.EqualTo(64 - 39));
     }
 }
