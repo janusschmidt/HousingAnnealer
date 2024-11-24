@@ -1,8 +1,8 @@
-using SimulatedAnnealing;
+using Anneal;
 
 namespace Tests;
 
-public class Tests
+public class HousingAnnealerTest
 {
     [SetUp]
     public void Setup()
@@ -24,8 +24,8 @@ public class Tests
             [0, 1, 0, 0, 1, 1, 0, 0]
         ];
 
-        var penalty = Annealer.CalculatePenalty(board);
-        Assert.That(penalty.Total, Is.EqualTo(11 * Annealer.TooManyNeighborsPenalty + 34 * Annealer.ExtraParkPenalty));
+        var penalty = HousingAnnealer.CalculatePenalty(board);
+        Assert.That(penalty.Total, Is.EqualTo(11 * HousingAnnealer.TooManyNeighborsPenalty + 34 * HousingAnnealer.ExtraParkPenalty));
     }
 
     [Test]
@@ -42,7 +42,7 @@ public class Tests
             [1, 0, 1, 0, 1, 0, 1, 0],
             [0, 1, 0, 1, 0, 1, 0, 1],
         ];
-        var penalty = Annealer.CalculatePenalty(idealBoard);
+        var penalty = HousingAnnealer.CalculatePenalty(idealBoard);
         Assert.That(penalty.Total, Is.EqualTo(32));
     }
 
@@ -61,7 +61,7 @@ public class Tests
             [1, 0, 1, 0, 0, 1, 0, 1]
         ];
 
-        var penalty = Annealer.CalculatePenalty(board);
+        var penalty = HousingAnnealer.CalculatePenalty(board);
         Assert.That(penalty.Total, Is.EqualTo(64 - 39));
     }
 }

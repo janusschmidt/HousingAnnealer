@@ -18,7 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\src\Anneal\SimulatedAnnealing.csproj" />
+      <ProjectReference Include="..\..\src\Anneal\Anneal.csproj" />
     </ItemGroup>
 
 </Project>

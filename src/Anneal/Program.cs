@@ -1,28 +1,29 @@
 ﻿using System.Diagnostics;
 
-namespace SimulatedAnnealing
+namespace Anneal;
+
+static class Program
 {
-    static class Program
+    static void Main()
     {
-        static void Main()
-        {
-            Console.WriteLine("Started...");
+        Console.WriteLine("Started...");
+        var annealer = new HousingAnnealer();
 
-            var sw = new Stopwatch();
-            sw.Start();
+        var sw = new Stopwatch();
+        sw.Start();
 
-            var best = Enumerable.Range(1, Annealer.MaxNumberOfExperiments)
-                .AsParallel()
-                .Select(_ => Annealer.Anneal())
-                .OrderBy(x => x.Score.Total)
-                .Take(3)
-                .ToArray();
+        var best = Enumerable.Range(1, HousingAnnealer.MaxNumberOfExperiments)
+            .AsParallel()
+            .Select(_ => annealer.Anneal())
+            .OrderBy(x => x.Score.Total)
+            .Take(3)
+            .ToArray();
 
-            Console.WriteLine($"Best scores:");
+        Console.WriteLine($"Time taken: {sw.Elapsed}");
+        Console.WriteLine($"Best scores:");
 
-            foreach (var s in best) Annealer.PrintResult(s);
+        foreach (var s in best) HousingAnnealer.PrintResult(s);
 
-            Console.WriteLine($"Time taken: {sw.Elapsed}");
-        }
+        Console.WriteLine($"Time taken: {sw.Elapsed}");
     }
 }
