@@ -1,4 +1,4 @@
-# Board Annealer
+# Housing Annealer
 
 Uses simulated annealing to solve the following problem.
 
